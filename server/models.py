@@ -63,4 +63,8 @@ class Review(db.Model):
     item = db.relationship('Item', back_populates='reviews')
 
 class ReviewSchema(Schema):
-    pass
+    id = fields.Int(dump_only=True)
+    comment = fields.String()
+    customer = fields.Nested(lambda: CustomerSchema(exclude=("reviews",)))
+    item = fields.Nested(lambda: ItemSchema(exclude=("reviews",)))
+
