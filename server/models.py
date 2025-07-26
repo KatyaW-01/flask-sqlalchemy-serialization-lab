@@ -44,7 +44,11 @@ class Item(db.Model):
         return f'<Item {self.id}, {self.name}, {self.price}>'
     
 class ItemSchema(Schema):
-    pass
+    id = fields.Int(dump_only=True)
+    name = fields.String()
+    price = fields.Float()
+    reviews = fields.Nested(lambda: ReviewSchema(exclude=("item",)), many=True)
+
     
 class Review(db.Model):
     __tablename__ = 'reviews'
